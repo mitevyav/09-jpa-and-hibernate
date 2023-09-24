@@ -4,10 +4,12 @@ import com.yavor.cruddemo.dao.AppDao;
 import com.yavor.cruddemo.entity.Course;
 import com.yavor.cruddemo.entity.Instructor;
 import com.yavor.cruddemo.entity.InstructorDetail;
+import com.yavor.cruddemo.entity.Review;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,31 +23,44 @@ public class CruddemoApplication {
     @Bean
     public CommandLineRunner commandLineRunner(AppDao appDao) {
         return runner -> {
-//            createInstructor(appDao);
+//            createCourseAndReviews(appDao);
 
-//            findInstructor(appDao);
+//            retrieveCourseAndReviews(appDao);
 
-//            deleteInstructor(appDao);
+            deleteCourseAndReviews(appDao);
 
-//            findInstructorDetail(appDao);
-
-//            deleteInstructorDetail(appDao);
-
-//            createInstructorWithCourses(appDao);
-
-//            findInstructorWithCourses(appDao);
-
-//            findCoursesForInstructor(appDao);
-
-//            findInstructorWithCoursesJoinFetch(appDao);
-
-
-//            updateInstructor(appDao);
-
-//            updateCourse(appDao);
-
-            deleteCourseById(appDao);
         };
+    }
+
+    @Transactional
+    private void deleteCourseAndReviews(AppDao appDao) {
+        int id = 10;
+        System.out.println("Finding course with id: " + id);
+        appDao.deleteCourseById(id);
+        System.out.println("Done deleting course!");
+    }
+
+
+    private void retrieveCourseAndReviews(AppDao appDao) {
+        int id = 10;
+        System.out.println("Finding course with id: " + id);
+
+        Course course = appDao.findCourseAndReviewsByCourseId(id);
+
+        System.out.println("Course: " + course);
+
+        System.out.println("Reviews: " + course.getReviews());
+    }
+
+    private void createCourseAndReviews(AppDao appDao) {
+        Course course = new Course("The Fellowship of the Ring");
+        course.addReview(new Review("Great course!"));
+        course.addReview(new Review("Cool course!"));
+        course.addReview(new Review("Awesome course!"));
+
+        System.out.println("Saving course: " + course);
+        appDao.saveCourse(course);
+        System.out.println("Done saving course");
     }
 
     private void deleteCourseById(AppDao appDao) {
