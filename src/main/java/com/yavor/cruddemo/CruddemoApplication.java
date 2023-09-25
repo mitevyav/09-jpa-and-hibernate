@@ -1,10 +1,7 @@
 package com.yavor.cruddemo;
 
 import com.yavor.cruddemo.dao.AppDao;
-import com.yavor.cruddemo.entity.Course;
-import com.yavor.cruddemo.entity.Instructor;
-import com.yavor.cruddemo.entity.InstructorDetail;
-import com.yavor.cruddemo.entity.Review;
+import com.yavor.cruddemo.entity.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,8 +20,19 @@ public class CruddemoApplication {
     @Bean
     public CommandLineRunner commandLineRunner(AppDao appDao) {
         return runner -> {
-
+            createCourseAndStudents(appDao);
         };
+    }
+
+    private void createCourseAndStudents(AppDao appDao) {
+        Course course = new Course("The Fellowship of the Ring");
+        course.addStudent(new Student("Frodo", "Baggins", "frodo.baggins@lotr.com"));
+        course.addStudent(new Student("Samwise", "Gamgee", "samwise.gamgee@lotr.com"));
+        course.addStudent(new Student("Peregrin", "Took", "peregrin.took@lotr.com"));
+
+        System.out.println("Saving course: " + course);
+        appDao.saveCourse(course);
+        System.out.println("Done saving course");
     }
 
     @Transactional
