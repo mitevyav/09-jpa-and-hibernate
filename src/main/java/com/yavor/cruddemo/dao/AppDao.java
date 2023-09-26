@@ -3,6 +3,7 @@ package com.yavor.cruddemo.dao;
 import com.yavor.cruddemo.entity.Course;
 import com.yavor.cruddemo.entity.Instructor;
 import com.yavor.cruddemo.entity.InstructorDetail;
+import com.yavor.cruddemo.entity.Student;
 
 import java.util.List;
 
@@ -35,4 +36,6 @@ public interface AppDao {
     Course findCourseAndReviewsByCourseId(int id);
 
     Course findCourseAndStudentsByCourseId(int id);
+
+    Student findStudentAndCoursesByStudentId(int id);
 }

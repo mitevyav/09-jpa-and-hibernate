@@ -3,6 +3,7 @@ package com.yavor.cruddemo.dao;
 import com.yavor.cruddemo.entity.Course;
 import com.yavor.cruddemo.entity.Instructor;
 import com.yavor.cruddemo.entity.InstructorDetail;
+import com.yavor.cruddemo.entity.Student;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,6 +131,18 @@ public class AppDaoImpl implements AppDao {
                 "SELECT c FROM Course c " +
                         "JOIN FETCH c.students " +
                         "WHERE c.id=:data", Course.class);
+
+        query.setParameter("data", id);
+
+        return query.getSingleResult();
+    }
+
+    @Override
+    public Student findStudentAndCoursesByStudentId(int id) {
+        TypedQuery<Student> query = entityManager.createQuery(
+                "SELECT s FROM Student s " +
+                        "JOIN FETCH s.courses " +
+                        "WHERE s.id=:data", Student.class);
 
         query.setParameter("data", id);
 
