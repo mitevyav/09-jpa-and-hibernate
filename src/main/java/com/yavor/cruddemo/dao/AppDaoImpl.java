@@ -148,4 +148,10 @@ public class AppDaoImpl implements AppDao {
 
         return query.getSingleResult();
     }
+
+    @Override
+    @Transactional
+    public void updateStudent(Student student) {
+        entityManager.merge(student);
+    }
 }

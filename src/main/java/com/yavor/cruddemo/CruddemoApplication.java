@@ -24,8 +24,35 @@ public class CruddemoApplication {
 
 //            findCourseAndStudents(appDao);
 
-            findStudentAndCourses(appDao);
+//            findStudentAndCourses(appDao);
+
+            addMoreCoursesForStudent(appDao);
         };
+    }
+
+    private void addMoreCoursesForStudent(AppDao appDao) {
+        int id = 2;
+        System.out.println("Finding student with id: " + id);
+
+        Student student = appDao.findStudentAndCoursesByStudentId(id);
+
+        System.out.println("Student: " + student);
+
+        System.out.println("Courses: " + student.getCourses());
+
+        Course course1 = new Course("The Hobbit");
+        Course course2 = new Course("The Two Towers");
+        Course course3 = new Course("The Return of the King");
+
+        student.addCourse(course1);
+        student.addCourse(course2);
+        student.addCourse(course3);
+
+        System.out.println("Updating student: " + student);
+
+        appDao.updateStudent(student);
+
+        System.out.println("Done saving student");
     }
 
     private void findStudentAndCourses(AppDao appDao) {
